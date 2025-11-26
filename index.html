@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gajah Terbang Jelly Depol</title>
+<style>
+body, html {
+  margin:0; padding:0; height:100%; overflow:hidden;
+  background: linear-gradient(#7ec8ff, #bfe9ff 60%);
+  font-family: system-ui, sans-serif;
+}
+.scene{
+  position:relative;
+  width:100%; height:100vh;
+}
+
+/* Awan */
+.cloud{
+  position:absolute;
+  top:10%;
+  left:-30%;
+  width:380px; height:120px;
+  opacity:0.9;
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,0.08));
+  animation: drift 40s linear infinite;
+}
+.cloud.two{
+  top:25%; left:-50%; width:520px;
+  animation-duration:55s; opacity:0.85;
+}
+.cloud svg{ width:100%; height:100%; }
+@keyframes drift{
+  0%{ transform: translateX(0); }
+  100%{ transform: translateX(160vw); }
+}
+
+/* Wrapper animasi */
+.fly-wrapper{
+  position:absolute; left:50%; top:50%;
+  transform: translate(-50%,-50%);
+}
+
+/* Wrapper drag */
+.drag-wrapper{
+  cursor: grab;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  will-change: transform;
+}
+
+/* Karpet terbang */
+.carpet{
+  width:400px;
+  height:40px;
+  background:linear-gradient(90deg,#d94f70,#f2c94c,#d94f70);
+  border-radius:20px;
+  transform: rotateX(10deg);
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,0.3));
+  z-index:0;
+}
+
+/* Gajah */
+.elephant{
+  width:320px;
+  margin-top: -280px; /* posisinya di atas karpet */
+  position: relative;
+  z-index:1;
+}
+
+/* Sayap flap */
+.wing{
+  transform-origin: 0% 50%;
+  animation: flap 0.5s ease-in-out infinite alternate;
+}
+.wing.right{
+  transform-origin: 100% 50%;
+  animation-direction: alternate-reverse;
+}
+@keyframes flap{
+  0%{ transform: rotate(0deg); }
+  50%{ transform: rotate(-25deg); }
+  100%{ transform: rotate(0deg); }
+}
+
+/* Belalai */
+.trunk path{
+  stroke:#6a7a83;
+  stroke-width:24;
+  fill:none;
+  stroke-linecap:round;
+}
+.trunk{
+  transform-origin: top center;
+  animation: trunkwave 2s ease-in-out infinite alternate;
+  z-index:10;
+  pointer-events: none;
+}
+
+/* Kaki */
+.legs{
+  animation: walk 1s ease-in-out infinite alternate;
+}
+@keyframes walk{
+  0%{ transform: translateY(0); }
+  50%{ transform: translateY(5px); }
+  100%{ transform: translateY(0); }
+}
+
+/* Caption */
+.caption{
+  position:absolute;
+  left:20px; bottom:20px;
+  background:rgba(255,255,255,0.6);
+  padding:8px 12px;
+  border-radius:12px;
+  backdrop-filter: blur(4px);
+  font-weight:600;
+  color:#014f86;
+  z-index:10;
+}
+</style>
+</head>
+<body>
+<div class="scene">
+  <!-- Awan -->
+  <div class="cloud">
+    <svg viewBox="0 0 640 220">
+      <g fill="#fff">
+        <ellipse cx="120" cy="100" rx="80" ry="50"/>
+        <ellipse cx="210" cy="80" rx="100" ry="60"/>
+        <ellipse cx="320" cy="100" rx="100" ry="60"/>
+        <rect x="40" y="100" width="370" height="60" rx="30"/>
+      </g>
+    </svg>
+  </div>
+  <div class="cloud two">
+    <svg viewBox="0 0 640 220">
+      <g fill="#fff">
+        <ellipse cx="100" cy="80" rx="70" ry="40"/>
+        <ellipse cx="200" cy="60" rx="110" ry="55"/>
+        <ellipse cx="340" cy="95" rx="90" ry="48"/>
+        <rect x="30" y="110" width="300" height="55" rx="28"/>
+      </g>
+    </svg>
+  </div>
+
+  <!-- Wrapper animasi -->
+  <div class="fly-wrapper">
+    <!-- Wrapper drag -->
+    <div class="drag-wrapper">
+      <div class="carpet"></div>
+      <div class="elephant">
+        <svg viewBox="0 0 500 400">
+          <g>
+            <!-- Sayap -->
+            <g class="wing" transform="translate(60,180)">
+              <path d="M0 0 q-60 -80 -100 0 q60 60 100 0 z" fill="#ffd27f" opacity="0.8"/>
+            </g>
+            <g class="wing right" transform="translate(440,180)">
+              <path d="M0 0 q60 -80 100 0 q-60 60 -100 0 z" fill="#ffd27f" opacity="0.8"/>
+            </g>
+            <!-- Telinga -->
+            <ellipse cx="130" cy="180" rx="60" ry="100" fill="#6b7b84"/>
+            <ellipse cx="370" cy="180" rx="60" ry="100" fill="#6b7b84"/>
+            <!-- Kepala -->
+            <ellipse cx="250" cy="200" rx="100" ry="100" fill="#7b8a97"/>
+            <!-- Mata -->
+            <circle cx="220" cy="180" r="10" fill="#111"/>
+            <circle cx="280" cy="180" r="10" fill="#111"/>
+            <!-- Tubuh -->
+            <ellipse cx="250" cy="320" rx="150" ry="90" fill="#7b8a97"/>
+            <!-- Kaki -->
+            <rect class="legs" x="180" y="350" width="28" height="60" rx="10" fill="#6a7a83"/>
+            <rect class="legs" x="292" y="350" width="28" height="60" rx="10" fill="#6a7a83"/>
+            <!-- Belalai -->
+            <g class="trunk" transform="translate(250,200)">
+              <path d="M0 0 q0 80 -15 120"/>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="caption">Gajah Terbang Jelly Depol ✨</div>
+</div>
+
+<script>
+// Drag wrapper (karpet + gajah)
+const drag = document.querySelector('.drag-wrapper');
+
+let isDown=false, startX=0, startY=0, posX=0, posY=0;
+
+drag.addEventListener('pointerdown', e=>{
+  isDown=true;
+  startX=e.clientX;
+  startY=e.clientY;
+  drag.setPointerCapture(e.pointerId);
+  drag.style.transition='none';
+});
+
+window.addEventListener('pointermove', e=>{
+  if(!isDown) return;
+  const dx = e.clientX - startX;
+  const dy = e.clientY - startY;
+  drag.style.transform = `translate(${posX+dx}px, ${posY+dy}px)`;
+});
+
+window.addEventListener('pointerup', e=>{
+  if(!isDown) return;
+  isDown=false;
+  const dx = e.clientX - startX;
+  const dy = e.clientY - startY;
+  posX += dx;
+  posY += dy;
+  drag.style.transition='';
+});
+
+// ----------------------------
+// Animasi terbang random
+// ----------------------------
+const flyWrapper = document.querySelector('.fly-wrapper');
+let x = 0, y = 0;
+let vx = (Math.random() * 2 + 1) * (Math.random() < 0.5 ? -1 : 1);
+let vy = (Math.random() * 1.5 + 0.5) * (Math.random() < 0.5 ? -1 : 1);
+
+function animate() {
+  if(!isDown){
+    x += vx;
+    y += vy;
+
+    // batas kanan/kiri
+    if(x > window.innerWidth/2 - 50 || x < -window.innerWidth/2 + 50) vx *= -1;
+    // batas atas/bawah
+    if(y > window.innerHeight/2 - 50 || y < -window.innerHeight/2 + 50) vy *= -1;
+
+    drag.style.transform = `translate(${posX + x}px, ${posY + y}px)`;
+  }
+  requestAnimationFrame(animate);
+}
+animate();
+</script>
+</body>
+</html>
